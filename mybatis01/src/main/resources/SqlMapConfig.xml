@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- mybatis的主配置文件 -->
+<configuration>
+    <!--加载数据源properties，resource和URL两种加载方式-->
+    <properties resource="jdbcConfig.properties"></properties>
+    <!--URL  协议 主机 端口 URI
+    <properties url="file:///D:\javaDev\mybatis\mybatis01\src\main\resources/jdbcConfig.properties"></properties>
+    -->
+    <!--别名配置，该包下的所有类的别名就是类名，不再区分大小写，后续调用可以不使用全类名而改用别名,如mapper里-->
+    <typeAliases>
+        <package name="com.lhozy.domain"/>
+    </typeAliases>
+    <!--
+    <typeAliases>
+        <typeAlias type="com.lhozy.domain.User" alias="user"/>
+        <typeAlias type="com.lhozy.domain.School" alias="school"/>
+    </typeAliases>
+    -->
+
+    <!-- 配置环境 -->
+    <environments default="mysql">
+        <!-- 配置mysql的环境-->
+        <environment id="mysql">
+            <!-- 配置事务的类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据源（连接池） -->
+            <dataSource type="POOLED">
+                <!-- 配置连接数据库的4个基本信息 -->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 -->
+    <mappers>
+        <mapper resource="com/lhozy/dao/IUserDao.xml"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhozy.dao.IAccountDao">
+    <resultMap id="actUserMap" type="account">
+        <id property="id" column="aid" />
+        <result property="uid" column="uid"/>
+        <result property="money" column="money"/>
+        <association property="user" javaType="com.lhozy.domain.User">
+            <id property="id" column="id"/>
+            <result property="userName" column="username"/>
+            <result property="sex" column="sex"/>
+            <result property="birthday" column="birthday"/>
+            <result property="address" column="address"/>
+        </association>
+    </resultMap>
+    <select id="findAll" resultMap="actUserMap">
+        SELECT a.id AS aid,a.uid,a.money,u.*
+        FROM account a INNER JOIN USER u
+        ON a.uid = u.id
+    </select>
+
+    <select id="findById" parameterType="int" resultMap="actUserMap">
+        select * FROM account WHERE id = #{id}
+    </select>
+</mapper>
